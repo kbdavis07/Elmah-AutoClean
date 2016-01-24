@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--
+  ELVUE - Reports for ELMAH Error Logs
+  Copyright (c) 2011 Atif Aziz. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+<head>
+    <title>Error Log Report</title>
+    <style type="text/css">
+    body
+    {
+        font-family: Georgia, serif;
+        font-size: medium;
+        margin: 1em auto;
+        text-align: center;
+        background-color: #fff;
+        width: 960px;
+    }
+    a
+    {
+        color: #0063ce;
+    }
+    a:visited
+    {
+        color: #840094;
+    }
+    h1
+    {
+        font-size: x-large;
+    }
+    #elf
+    {
+        display: none;
+    }
+    table#errors
+    {
+        width: 430px;
+        border-collapse: collapse;
+        position: absolute;
+    }
+    table#errors caption
+    {
+        padding: 0.25em 0;
+        background-color: #eee;
+    }
+    table#errors th, table#errors td
+    {
+        text-align: left;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 0.2em 0.4em;
+    }
+    table#errors .num
+    {
+        text-align: right;
+    }
+    table#errors tr th
+    {
+        cursor: pointer;
+    }
+    table#errors tr th:hover
+    {
+        color: blue;
+    }
+    #chart
+    {
+        width: 500px;
+        height: 333px;
+        position: absolute;
+        left: 460px;
+    }
+    #main
+    {
+        position: relative;
+    }
+    abbr
+    {
+        cursor: help;
+    }
+    footer
+    {
+        position: fixed;
+        bottom: 0;
+        width: 960px;
+        color: #666;
+        font-size: small;
+    }
+    #about
+    {
+        background-color: #fff;
+        border-top: 1px solid #eee;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        margin: 0;
+        width: 380px;
+        margin-left: 568px;
+        padding: 5px;
+    }
+    #about a
+    {
+        color: #0063ce;
+    }
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+    </style>
+</head>
+<body ng-controller="page">
+    <div id="page">
+        <h1>Error Log Report</h1>
+        <div id="main" ng-cloak>
+            <div id="chart" google-chart="PieChart" ng-model="gc"></div>
+            <table id="errors">
+                <caption>
+                    <span ng-if="callbackCount == 0">Loading&hellip;</span>
+                    <span ng-if="loadedCount < totalCount">{{loadedCount|number:0}} of {{totalCount|number:0}} errors</span>
+                    <span ng-if="loadedCount > 0 && loadedCount >= totalCount">{{totalCount|number:0}} errors</span>
+                </caption>
+                <tr><th ng-click="sort('type')">Type</th>
+                    <th ng-click="sort('time')">Last</th>
+                    <th class="num"
+                        ng-click="sort('count')">Count</th></tr>
+                <tr ng-repeat="e in errors|orderBy:sortKey:sortDescending">
+                    <td><abbr title="{{e.type$}}">{{e.type}}</abbr></td>
+                    <td>
+                        <a ng-if="e.href" href="{{e.href}}"><time class="timeago" am-time-ago="e.time" title="{{e.time$}}">{{e.time|date:'medium'}}</time></a>
+                        <time ng-if="!e.href" class="timeago" am-time-ago="e.time" title="{{e.time$}}">{{e.time|date:'medium'}}</time>
+                    </td>
+                    <td class="num">{{e.count|number:0}}</td>
+                </tr>
+            </table>
+            </div>
+        <footer>
+            <p id="about">
+                <a href="https://bitbucket.org/raboof/elvue">Elvue</a>
+                <abbr title="copyright">&copy;</abbr> 2011 Atif Aziz. All rights reserved.
+                <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p>
+        </footer>
+    </div>
+    <iframe id="elf" width="0" height="0" elmah-download="{{src}}"></iframe>
+    <script type="text/javascript" src="elvuecfg.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.8.0/angular-moment.min.js"></script>
+    <script type="text/javascript">
+    /**
+     * Date.parse with progressive enhancement for ISO 8601 <https://github.com/csnover/js-iso8601>
+     * (c) 2011 Colin Snover <http://zetafleet.com>
+     * Released under MIT license.
+     */
+    (function (Date, undefined) {
+        var origParse = Date.parse, numericKeys = [ 1, 4, 5, 6, 7, 10, 11 ];
+        Date.parse = function (date) {
+            var timestamp, struct, minutesOffset = 0;
+
+            // ES5 section 15.9.4.2 states that the string should attempt to be parsed as a Date Time String Format string
+            // before falling back to any implementation-specific date parsing, so that’s what we do, even if native
+            // implementations could be faster
+            //              1 YYYY                2 MM       3 DD           4 HH    5 mm       6 ss        7 msec        8 Z 9 +/-  10 tzHH    11 tzmm
+            if ((struct = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/.exec(date))) {
+                if (struct[7] != null) (struct[7] + '000').slice(0, 3);
+                // avoid NaN timestamps caused by "undefined" values being passed to Date.UTC
+                for (var i = 0, k; (k = numericKeys[i]); ++i) {
+                    struct[k] = +struct[k] || 0;
+                }
+
+                // allow undefined days and months
+                struct[2] = (+struct[2] || 1) - 1;
+                struct[3] = +struct[3] || 1;
+
+                if (struct[8] !== 'Z' && struct[9] !== undefined) {
+                    minutesOffset = struct[10] * 60 + struct[11];
+
+                    if (struct[9] === '+') {
+                        minutesOffset = 0 - minutesOffset;
+                    }
+                }
+
+                timestamp = Date.UTC(struct[1], struct[2], struct[3], struct[4], struct[5] + minutesOffset, struct[6], struct[7]);
+            }
+            else {
+                timestamp = origParse ? origParse(date) : NaN;
+            }
+
+            return timestamp;
+        };
+    }(Date));
+    </script>
+    <script type="text/javascript" src="elvue.js"></script>
+</body>
+</html>

@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elmah-AutoClean", "Elmah-AutoClean\Elmah-AutoClean.csproj", "{0809693D-D483-4153-B3D5-2888129CAD1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console-Test", "Console-Test\Console-Test.csproj", "{BD56759A-67F2-475C-802D-5CF944A00E97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0809693D-D483-4153-B3D5-2888129CAD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0809693D-D483-4153-B3D5-2888129CAD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0809693D-D483-4153-B3D5-2888129CAD1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD56759A-67F2-475C-802D-5CF944A00E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD56759A-67F2-475C-802D-5CF944A00E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD56759A-67F2-475C-802D-5CF944A00E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD56759A-67F2-475C-802D-5CF944A00E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
