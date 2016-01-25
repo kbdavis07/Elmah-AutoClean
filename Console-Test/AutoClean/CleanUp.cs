@@ -25,8 +25,10 @@ namespace Console_Test.AutoClean
         public void DeleteDuplicates()
         {
 
+            deleteRepeatedError();
             deleteDuplicateError();
             deleteDuplicateUserError();
+
         }
 
 
@@ -41,9 +43,14 @@ namespace Console_Test.AutoClean
 
         }
 
-        
 
-
+        /// <summary>
+        /// Errors that occur that are duplicates within a very close timeframe.
+        /// </summary>
+        public void deleteRepeatedError()
+        {
+            archiveError();
+        }
 
 
 
@@ -70,7 +77,7 @@ namespace Console_Test.AutoClean
         /// </example>
         public void deleteDuplicateUserError()
         {
-
+            archiveUser();
         }
 
 
