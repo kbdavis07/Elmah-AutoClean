@@ -119,21 +119,7 @@ namespace Console_Test
                 }
               }
            
-        public class ErrorMessage 
-        {
-
-            public string ID { get; set; }
-            public string FileName { get; set; }
-            public Boolean Delete { get; set; }
-
-            public string Host { get; set; }
-            public string Type { get; set; }
-            public string StatusCode { get; set; }
-            public string Detail { get; set; }
-            public string USER_AGENT { get; set; }
-            public string Cookie { get; set; }
-           
-        }
+        
 
 
 
