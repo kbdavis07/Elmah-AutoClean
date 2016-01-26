@@ -179,6 +179,9 @@ namespace Elmah
             if (pageSize < 0)
                 throw new ArgumentOutOfRangeException("pageSize", pageSize, null);
 
+
+
+
             /* Get all files in directory */
             string logPath = LogPath;
             DirectoryInfo dir = new DirectoryInfo(logPath);
@@ -229,6 +232,7 @@ namespace Elmah
                         reader.Close();
                     }
                 }
+
             }
     
             /* Return how many are total */

@@ -44,18 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoClean\CleanUp.cs" />
-    <Compile Include="AutoClean\Error.cs" />
-    <Compile Include="AutoClean\ErrorArchive.cs" />
-    <Compile Include="AutoClean\ErrorLogEntry.cs" />
-    <Compile Include="AutoClean\ErrorXml.cs" />
-    <Compile Include="AutoClean\UserArchive.cs" />
-    <Compile Include="Elmah\MemoryErrorLog.cs" />
-    <Compile Include="AutoClean\XmlFileErrorLog.cs" />
+    <Compile Include="AutoClean\Files.cs" />
+    <Compile Include="AutoClean\Model\Error.cs" />
+    <Compile Include="AutoClean\Model\ErrorArchive.cs" />
+    <Compile Include="AutoClean\Model\UserArchive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Elmah\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

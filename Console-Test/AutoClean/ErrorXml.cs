@@ -39,7 +39,7 @@ namespace Elmah
     using NameValueCollection = System.Collections.Specialized.NameValueCollection;
     using XmlConvert = System.Xml.XmlConvert;
     using WriteState = System.Xml.WriteState;
-
+    using Console_Test.AutoClean;
     #endregion
 
     /// <summary>

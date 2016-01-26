@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Console_Test.AutoClean
 {
     /// <summary>
-    /// Error Archive
+    /// User Archive Data Model
     /// </summary>
-    class ErrorArchive
+    class UserArchive
     {
     }
 }

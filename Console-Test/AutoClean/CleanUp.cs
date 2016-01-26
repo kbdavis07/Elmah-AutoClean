@@ -1,4 +1,29 @@
-﻿using System;
+﻿#region License, Terms and Author(s)
+//
+// ELMAH - Error Logging Modules and Handlers Auto Clean for ASP.NET
+// Copyright (c) 2016 Brian Keith Davis. All rights reserved.
+//
+//  Author(s):
+//
+//      Brian Keith Davis, http://Kbdavis07.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,33 +46,51 @@ namespace Console_Test.AutoClean
     class CleanUp
     {
 
+        /// <summary>
+        /// Path to the XML Store
+        /// </summary>
+        const string LogPath = ("P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void DeleteDuplicates()
         {
-
-            deleteRepeatedError();
             deleteDuplicateError();
             deleteDuplicateUserError();
 
         }
 
-
-        public void DeleteByDate()
-        {
-
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void DeleteToSaveSpace()
         {
+
+
+
 
         }
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="days"></param>
+        public static void DeleteByDate(uint days)
+        {
+            Files.DeleteOldFiles(LogPath, days);
+        }
+
+
+       
+
+
+        /// <summary>
         /// Errors that occur that are duplicates within a very close timeframe.
         /// </summary>
-        public void deleteRepeatedError()
+        public void DeleteRepeatedError()
         {
             archiveError();
         }
