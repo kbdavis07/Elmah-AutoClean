@@ -154,32 +154,40 @@ namespace Console_Test.AutoClean
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        public static DateTime GetOldestFile(string directory)
+        public static int GetOldestFile(string directory)
         {
-            if (!Directory.Exists(directory))
-                throw new ArgumentException();
+
+            int Now = DateTime.Today.Day;
+            
+            if (!Directory.Exists(directory)) throw new ArgumentException();
 
             DirectoryInfo parent = new DirectoryInfo(directory);
             FileInfo[] children = parent.GetFiles();
 
-            if (children.Length == 0) return new DateTime(0,0,0);
+            if (children.Length == 0) return 0;
 
             FileInfo oldest = children[0];
+
             foreach (var child in children.Skip(1))
             {
                 if ( (child.CreationTime < oldest.CreationTime) | (child.LastWriteTime < oldest.LastWriteTime) )
                     oldest = child;
             }
 
+            int OldLast = oldest.LastWriteTime.Day;
+            int OldCreation = oldest.CreationTime.Day;
 
             if (oldest.LastWriteTime > oldest.CreationTime)
             {
-                return oldest.LastWriteTime;
+               Console.WriteLine("LastWriteTime: " + oldest.LastWriteTime);
+               return (Now - OldLast);
+
             }
 
             else
             {
-                return oldest.CreationTime;
+                Console.WriteLine("CreationTime");
+                return (OldCreation - Now);
             }
             
         }
