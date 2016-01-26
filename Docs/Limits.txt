@@ -1,0 +1,30 @@
+
+
+Max 1,000 Files    Size: 50MB
+
+
+
+200  Files --> Delete 50 Days
+
+400  Files --> Delete 40 Days
+
+600  Files --> Delete 30 Days
+
+800  Files --> Delete 20 Days
+
+1000 Files --> Delete 10 Days
+
+
+
+10MB  --> Delete 50 Days
+20MB  --> Delete 40 Days
+30MB
+40MB
+50MB
+
+
+
+
+
+
+
