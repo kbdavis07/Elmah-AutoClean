@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace Console_Test.AutoClean
         /// <summary>
         /// Path to the XML Store
         /// </summary>
-        const string LogPath = ("P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
+        const string LogPath = (@"P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
 
 
         /// <summary>
@@ -65,13 +66,110 @@ namespace Console_Test.AutoClean
         /// <summary>
         /// 
         /// </summary>
-        public void DeleteToSaveSpace()
+        public static int DeleteToSaveSpace()
         {
+            DirectoryInfo dInfo = new DirectoryInfo(LogPath);
+
+               int numFiles = Files.numFilesinDirectory(dInfo);
+            decimal dirSize = Files.directorySize(dInfo);
+
+
+            //Target--> 10MB  200 Files        Dir Size 5 through 15MB ||  numFiles 195 through 205         
+            if ( (dirSize > 4) & (dirSize <= 15) || (numFiles >= 195) & (numFiles <= 205) )
+            {
+                DeleteByDate(700);
+                Console.WriteLine("Deleting 700 Days");
+                return Files.numFilesinDirectory(dInfo);
+            }
+
+            // Target--> 20MB   400 Files     Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 15) & (dirSize < 25) || (numFiles > 395) & (numFiles < 405))
+            {
+                DeleteByDate(40);
+                return Files.numFilesinDirectory(dInfo);
+            }
+
+            // Target--> 30MB   600 Files        Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 25) & (dirSize < 35) || (numFiles > 500) & (numFiles < 605))
+            {
+                DeleteByDate(30);
+                Console.WriteLine("Deleting 30 Days");
+                return Files.numFilesinDirectory(dInfo);
+            }
+
+            // Target--> 40MB  800 Files        Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 35) & (dirSize < 45) || (numFiles > 605) & (numFiles < 805))
+            {
+                DeleteByDate(20);
+                return Files.numFilesinDirectory(dInfo);
+            }
+
+            // Target--> 50MB  1000 Files    Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 45) & (dirSize < 55) || (numFiles > 805) & (numFiles < 1005))
+            {
+                DeleteByDate(10);
+                return Files.numFilesinDirectory(dInfo);
+            }
 
 
 
+            //Higher than Normal Error Files, Should not go here often.
+
+            else
+
+            {
+                //HighVolume(dirSize, numFiles);
+                //ToDo: Need to check how many files are remaining.
+
+                return Files.numFilesinDirectory(dInfo);
+            }
+
+            
 
         }
+
+
+        public static void HighVolume(decimal dirSize, int numFiles)
+        {
+
+            //Target--> 10MB  200 Files        Dir Size 5 through 15MB ||  numFiles 195 through 205         
+            if ((dirSize >= 5) & (dirSize <= 15) || (numFiles >= 195) & (numFiles <= 205))
+            {
+                DeleteByDate(8);
+            }
+
+            // Target--> 20MB   400 Files     Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 15) & (dirSize < 25) || (numFiles > 395) & (numFiles < 405))
+            {
+                DeleteByDate(6);
+            }
+
+            // Target--> 30MB   600 Files        Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 25) & (dirSize < 35) || (numFiles > 595) & (numFiles < 605))
+            {
+                DeleteByDate(4);
+            }
+
+            // Target--> 40MB  800 Files        Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 35) & (dirSize < 45) || (numFiles > 795) & (numFiles < 805))
+            {
+                DeleteByDate(3);
+            }
+
+            // Target--> 50MB  1000 Files    Dir Size 5.01 through 14.99MB ||  numFiles 196 through 204 
+            else if ((dirSize > 45) & (dirSize < 55) || (numFiles > 995) & (numFiles < 1005))
+            {
+                DeleteByDate(2);
+            }
+
+            else
+            {
+                //ToDo: Do anything? Just Delete Files without a date or break down by hour, min? 
+            }
+
+        }
+
+
 
 
         /// <summary>

@@ -14,9 +14,11 @@ namespace Console_Test.AutoClean
         /// Path to the XML Store
         /// </summary>
         const string LogPath = ("P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
+        DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
 
-    public String[] GetErrorFiles()
+
+        public String[] GetErrorFiles()
         {
            
             /* Get all files in directory */
@@ -95,7 +97,7 @@ namespace Console_Test.AutoClean
                 {
                     FileInfo file = new FileInfo(path);
                    
-                    if (file.CreationTime < date)
+                    if ( (file.CreationTime < date) | (file.LastWriteTime < date) )
                     {
                         file.Delete();
                     }
@@ -118,13 +120,14 @@ namespace Console_Test.AutoClean
         #endregion
 
 
+        #region File Tools
 
         /// <summary>
         /// Gets the Total Size in MB of a Directory.
         /// </summary>
         /// <param name="LogPath"></param>
         /// <returns>Total Size of Directory as a Decimal in MegaBytes (MB)</returns>
-        public static decimal DirectorySize(DirectoryInfo LogPath)
+        public static decimal directorySize(DirectoryInfo LogPath)
         {
             // Enumerate all the files
             long totalSize = LogPath.EnumerateFiles().Sum(file => file.Length);
@@ -133,14 +136,49 @@ namespace Console_Test.AutoClean
             return (Math.Round(totalSizeMB,2));
         }
 
+        /// <summary>
+        /// Returns the Number of Files in a Directory
+        /// </summary>
+        /// <param name="dInfo"></param>
+        /// <returns></returns>
+        public static int numFilesinDirectory(DirectoryInfo dInfo)
+        {
+            DirectoryInfo myDir = dInfo;
+            int count = myDir.GetFiles().Length;
+            return count;
+        }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
+        public static string GetOldestFile(string directory)
+        {
+            if (!Directory.Exists(directory))
+                throw new ArgumentException();
+
+            DirectoryInfo parent = new DirectoryInfo(directory);
+            FileInfo[] children = parent.GetFiles();
+            if (children.Length == 0)
+                return null;
+
+            FileInfo oldest = children[0];
+            foreach (var child in children.Skip(1))
+            {
+                if ( (child.CreationTime < oldest.CreationTime) | (child.LastWriteTime < oldest.LastWriteTime) )
+                    oldest = child;
+            }
 
 
+            if (oldest.LastWriteTime > oldest.CreationTime)
+            {
+                return oldest.LastWriteTime.ToString();
+            }
 
-
-
-
+            return oldest;
+        }
 
 
 
@@ -154,7 +192,7 @@ namespace Console_Test.AutoClean
             return 0 == (attributes & (FileAttributes.Directory | FileAttributes.Hidden | FileAttributes.System));
         }
 
-
+        #endregion
 
 
     }
