@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -74,7 +75,7 @@ namespace Console_Test.AutoClean
         /// <param name="filesToExclude"></param>
         /// <remarks>cref ="http://stackoverflow.com/questions/10295561/delete-files-older-than-a-date" </remarks>
         /// <call> Helpers.DeleteOldFiles(@"c:\mypath\", logAge, currentLog); </call>
-       public static void DeleteOldFiles(string folderPath, uint maximumAgeInDays)
+       public static void DeleteOldFiles(string folderPath, int maximumAgeInDays)
         {
             DateTime minimumDate = DateTime.Now.AddDays(-maximumAgeInDays);
             foreach (var path in Directory.EnumerateFiles(folderPath))
@@ -97,8 +98,11 @@ namespace Console_Test.AutoClean
                 {
                     FileInfo file = new FileInfo(path);
                    
-                    if ( (file.CreationTime < date) | (file.LastWriteTime < date) )
+                    if ( (file.CreationTime < date) || (file.LastWriteTime < date) )
                     {
+                        PrintStars();
+                        Console.WriteLine("Deleting File: " + file.Name);
+                        PrintStars();
                         file.Delete();
                     }
 
@@ -156,40 +160,19 @@ namespace Console_Test.AutoClean
         /// <returns></returns>
         public static int GetOldestFile(string directory)
         {
-
-            int Now = DateTime.Today.Day;
-            
             if (!Directory.Exists(directory)) throw new ArgumentException();
 
             DirectoryInfo parent = new DirectoryInfo(directory);
             FileInfo[] children = parent.GetFiles();
+            FileInfo[] parentArray = parent.GetFiles();
 
             if (children.Length == 0) return 0;
 
-            FileInfo oldest = children[0];
+            int OldestDateinDays = ( (DateTime.Now - children[0].LastWriteTime).Days);
 
-            foreach (var child in children.Skip(1))
-            {
-                if ( (child.CreationTime < oldest.CreationTime) | (child.LastWriteTime < oldest.LastWriteTime) )
-                    oldest = child;
-            }
+            Console.WriteLine(OldestDateinDays);
 
-            int OldLast = oldest.LastWriteTime.Day;
-            int OldCreation = oldest.CreationTime.Day;
-
-            if (oldest.LastWriteTime > oldest.CreationTime)
-            {
-               Console.WriteLine("LastWriteTime: " + oldest.LastWriteTime);
-               return (Now - OldLast);
-
-            }
-
-            else
-            {
-                Console.WriteLine("CreationTime");
-                return (OldCreation - Now);
-            }
-            
+            return OldestDateinDays;
         }
 
 
@@ -203,6 +186,24 @@ namespace Console_Test.AutoClean
         {
             return 0 == (attributes & (FileAttributes.Directory | FileAttributes.Hidden | FileAttributes.System));
         }
+
+
+
+        public static void PrintArray(FileInfo[] array)
+        {
+            foreach (var element in array)
+            {
+                Console.WriteLine(element.LastWriteTime);
+            }
+
+        }
+
+        public static void PrintStars(string message = " * ")
+        {
+            Console.WriteLine("**************" + message + "**************");
+        }
+       
+
 
         #endregion
 

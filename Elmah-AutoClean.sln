@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elmah-AutoClean", "Elmah-Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console-Test", "Console-Test\Console-Test.csproj", "{BD56759A-67F2-475C-802D-5CF944A00E97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashBoard", "DashBoard\DashBoard.csproj", "{5723D51B-BDD4-4BA0-AA2E-272793F1458B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BD56759A-67F2-475C-802D-5CF944A00E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD56759A-67F2-475C-802D-5CF944A00E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD56759A-67F2-475C-802D-5CF944A00E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5723D51B-BDD4-4BA0-AA2E-272793F1458B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5723D51B-BDD4-4BA0-AA2E-272793F1458B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5723D51B-BDD4-4BA0-AA2E-272793F1458B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5723D51B-BDD4-4BA0-AA2E-272793F1458B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
