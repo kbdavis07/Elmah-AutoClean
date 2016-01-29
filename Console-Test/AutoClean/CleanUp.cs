@@ -60,7 +60,17 @@ namespace Console_Test.AutoClean
         /// </summary>
         public static void Test()
         {
-            DeleteByDate(GetOldestFile(LogPath));
+            DeleteToSaveSpace();
+
+            PrintStars();
+            PrintStars("Result");
+
+            int ResultnumFiles = Files.numFilesinDirectory(dInfo);
+            int ResultOldestDate = GetOldestFile(LogPath);
+
+            PrintStars(ResultnumFiles.ToString());
+
+            PrintStars(ResultOldestDate.ToString());
         }
 
 
@@ -73,19 +83,31 @@ namespace Console_Test.AutoClean
         {
             DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
-               int numFiles = Files.numFilesinDirectory(dInfo);
-            decimal dirSize = Files.directorySize(dInfo);
+            int OldestDate = GetOldestFile(LogPath);
+              int numFiles = Files.numFilesinDirectory(dInfo);
+           decimal dirSize = Files.directorySize(dInfo);
 
 
-            //Target--> 10MB  200 Files        Dir Size 5 through 15MB ||  numFiles 195 through 205         
-            if ( (dirSize > 4) & (dirSize <= 15) || (numFiles >= 195) & (numFiles <= 205) )
+
+            if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 39 )
             {
-                DeleteByDate(700);
-                Console.WriteLine("Deleting 700 Days");
-                return Files.numFilesinDirectory(dInfo);
+                while ( (numFiles > 999 || OldestDate > 30) || dirSize > 39)
+                {
+                    DeleteByDate(OldestDate);
+                }
+             
             }
 
-           
+            if (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
+            {
+                while (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
+                {
+                    DeleteByDate(OldestDate);
+                }
+
+            }
+
+
             else
 
             {
@@ -95,7 +117,7 @@ namespace Console_Test.AutoClean
                 return Files.numFilesinDirectory(dInfo);
             }
 
-            
+            return Files.numFilesinDirectory(dInfo);
 
         }
 

@@ -77,6 +77,9 @@ namespace Console_Test.AutoClean
         /// <call> Helpers.DeleteOldFiles(@"c:\mypath\", logAge, currentLog); </call>
        public static void DeleteOldFiles(string folderPath, int maximumAgeInDays)
         {
+
+           //ToDo: Only Delete Elmah Error Files?
+
             DateTime minimumDate = DateTime.Now.AddDays(-maximumAgeInDays);
             foreach (var path in Directory.EnumerateFiles(folderPath))
             {
@@ -98,7 +101,7 @@ namespace Console_Test.AutoClean
                 {
                     FileInfo file = new FileInfo(path);
                    
-                    if ( (file.CreationTime < date) || (file.LastWriteTime < date) )
+                    if ( (file.LastWriteTime < date) || (file.CreationTime < date) )
                     {
                         PrintStars();
                         Console.WriteLine("Deleting File: " + file.Name);
@@ -164,14 +167,11 @@ namespace Console_Test.AutoClean
 
             DirectoryInfo parent = new DirectoryInfo(directory);
             FileInfo[] children = parent.GetFiles();
-            FileInfo[] parentArray = parent.GetFiles();
-
-            if (children.Length == 0) return 0;
+            
+            if (children.Length == 0) return 000000;
 
             int OldestDateinDays = ( (DateTime.Now - children[0].LastWriteTime).Days);
-
-            Console.WriteLine(OldestDateinDays);
-
+            
             return OldestDateinDays;
         }
 

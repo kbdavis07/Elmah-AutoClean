@@ -1,49 +1,43 @@
 
+Min Days: 10   
+Max Days: 31
 
-Max 1,000 Files    Size: 50MB
+Max Directory Size: 50MB 
 
-
-
-200  Files --> Delete 50 Days
-400  Files --> Delete 40 Days
-600  Files --> Delete 30 Days
-800  Files --> Delete 20 Days
-1000 Files --> Delete 10 Days
+Min Files: 100   (10 Days or earlyer) 
+Max Files: 1,000
 
 
-10MB  --> Delete 50 Days
-20MB  --> Delete 40 Days
-30MB  --> Delete 30 Days
-40MB  --> Delete 20 Days
-50MB  --> Delete 10 Days
+83kb * 1,000 = 83,000kb
 
 
 
-If (Size = 10MB or Files = 200)
+
+int x = 30;
+if (Enumerable.Range(1,100).Contains(x))
+    //true
+
+if (x >= 1 && x <= 100)
+    //true
+
+
+
+                          
+if ( (OldestDay > 30 || Oldestday > 11)  || (NumFiles > 999) )
 {
-   Delete 50 Days
+    DeletebyDate(+30);
+}  
+
+if (OldestDay > 10 || NumFiles > 10 )
+
+{
+        
 }
 
+NumFilesToDelete = (1,000 - NumFiles);
 
 
-Min Date
-
-Max Date
-
-
------------------------------------------------------
-
-
-
-
-error-2013-07-15003546Z-b0e60c84-3366-48bd-90c6-cc83dfa119f8
-
-
-
-
-
-
-
+if (NumFiles)
 
 
 
