@@ -23,6 +23,7 @@
 
 
 
+using System;
 using System.IO;
 using System.Linq;
 using static Console_Test.AutoClean.Files;
@@ -47,7 +48,32 @@ namespace Console_Test.AutoClean
         /// Path to the XML Store
         /// </summary>
         const string LogPath = (@"P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
-       
+
+
+        /// <summary>
+        /// Used for Testing and Debuging instead of putting it in the Main Program 
+        /// </summary>
+        public static void Test()
+        {
+           
+            
+
+            AutoClean();
+
+            PrintStars();
+            PrintStars("Result");
+
+
+            int ResultnumFiles = Files.numFilesinDirectory(LogPath);
+            int ResultOldestDate = GetOldestFile(LogPath);
+
+
+            PrintStars("Remaining Files: " + ResultnumFiles.ToString());
+
+            PrintStars("Remaining Oldest Date: " + ResultOldestDate.ToString());
+        }
+
+
         /// <summary>
         /// Default Path is /App_Data/errors/xmlstore/
         /// </summary>
@@ -58,23 +84,7 @@ namespace Console_Test.AutoClean
 
         }
 
-        /// <summary>
-        /// Used for Testing and Debuging instead of putting it in the Main Program 
-        /// </summary>
-        public static void Test()
-        {
-            DeleteToSaveSpace();
-
-            PrintStars();
-            PrintStars("Result");
-
-            int ResultnumFiles = Files.numFilesinDirectory(LogPath);
-            int ResultOldestDate = GetOldestFile(LogPath);
-
-            PrintStars(ResultnumFiles.ToString());
-
-            PrintStars(ResultOldestDate.ToString());
-        }
+       
 
         /// <summary>
         /// 
@@ -90,11 +100,19 @@ namespace Console_Test.AutoClean
 
 
             // Older than 31 days, More than 1,000 files, or has 40MB in folder 
-            if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 39 )
+            if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 15 )
             {
-                while ( (numFiles > 999 || OldestDate > 30) || dirSize > 39)
+                while ( (numFiles > 999 || OldestDate > 30) || dirSize > 15)
                 {
                     DeleteByDate(LogPath,OldestDate);
+
+                    numFiles = Files.numFilesinDirectory(LogPath);
+                    OldestDate = GetOldestFile(LogPath);
+                    dirSize = Files.directorySize(dInfo);
+
+                    //Console.WriteLine(String.Format("Round 1: | NumFiles:  {0,-10} | OldestDate:  {1,5} | DirSize {2,10} |", numFiles, OldestDate, dirSize));
+                   
+                    System.Threading.Thread.Sleep(5);
                 }
              
             }
@@ -105,6 +123,12 @@ namespace Console_Test.AutoClean
                 while (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
                 {
                     DeleteByDate(LogPath,OldestDate);
+
+                    numFiles = Files.numFilesinDirectory(LogPath);
+                    OldestDate = GetOldestFile(LogPath);
+                    dirSize = Files.directorySize(dInfo);
+
+                    System.Threading.Thread.Sleep(5);
                 }
 
             }
@@ -115,6 +139,13 @@ namespace Console_Test.AutoClean
                 while (Enumerable.Range(5, 10).Contains(OldestDate) & numFiles > 100)
                 {
                     DeleteByDate(LogPath,OldestDate);
+
+                    numFiles = Files.numFilesinDirectory(LogPath);
+                    OldestDate = GetOldestFile(LogPath);
+                    dirSize = Files.directorySize(dInfo);
+
+                    System.Threading.Thread.Sleep(5);
+
                 }
 
             }

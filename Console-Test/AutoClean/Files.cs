@@ -171,7 +171,7 @@ namespace Console_Test.AutoClean
 
         public static void PrintStars(string message = " * ")
         {
-            Console.WriteLine("**************" + message + "**************");
+            Console.WriteLine("**" + message + "**");
         }
 
 

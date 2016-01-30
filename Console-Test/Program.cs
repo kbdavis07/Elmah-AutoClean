@@ -10,6 +10,7 @@ namespace Console_Test
         static void Main(string[] args)
         {
             CleanUp.Test();
+            Files.PrintStars("Done");
         }
 
     }
