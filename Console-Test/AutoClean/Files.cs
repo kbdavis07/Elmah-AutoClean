@@ -1,85 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region License, Terms and Author(s)
+//
+// ELMAH - Error Logging Modules and Handlers Auto Clean for ASP.NET
+// Copyright (c) 2016 Brian Keith Davis. All rights reserved.
+//
+//  Author(s):
+//
+//  Brian Keith Davis, http://Kbdavis07.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+
+
+using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Console_Test.AutoClean
 {
+
+    /// <summary>
+    /// Tools for operating with XML files for AutoClean Operations.
+    /// </summary>
     class Files
     {
-        /// <summary>
-        /// Path to the XML Store
-        /// </summary>
-        const string LogPath = ("P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
-        DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
+        #region Settings
 
+            //For DeleteFileIfOlderThan() Method
+            private const int RetriesOnError = 3;
+            private const int DelayOnRetry = 1000;
 
-        public String[] GetErrorFiles()
-        {
-           
-            /* Get all files in directory */
-            string logPath = LogPath;
-            DirectoryInfo dir = new DirectoryInfo(logPath);
+        
+        #endregion
 
-            if (!dir.Exists)
-            {
-                //Todo: Create Directory Path? or Throw an Error?
-            }
-                
-            /* Gets only Elmah Error Files in XML Store */
-            FileSystemInfo[] infos = dir.GetFiles("error-*.xml");
-
-
-            if (infos.Length < 1)
-            {
-                //XML Store does not have any Errors
-                Console.WriteLine("XML Store does not have any Errors");
-
-                return null;
-                
-            }
-
-
-            string[] files = new string[infos.Length];
-            int count = 0;
-
-            Console.WriteLine("There are" + infos.Length + "Files");
-
-
-            /* Get files that are not marked with system and hidden attributes */
-            foreach (FileSystemInfo info in infos)
-            {
-                if (IsUserFile(info.Attributes))
-
-                    files[count++] = Path.Combine(logPath, info.Name);
-            }
-
-            return files;
-            
-        }
-
-
-
-    #region Delete 
+        #region Delete 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="folderPath"></param>
         /// <param name="maximumAgeInDays"></param>
-        /// <param name="filesToExclude"></param>
         /// <remarks>cref ="http://stackoverflow.com/questions/10295561/delete-files-older-than-a-date" </remarks>
-        /// <call> Helpers.DeleteOldFiles(@"c:\mypath\", logAge, currentLog); </call>
-       public static void DeleteOldFiles(string folderPath, int maximumAgeInDays)
+        /// <call> Helpers.DeleteOldFiles(@"c:\mypath\", logAge); </call>
+        public static void DeleteOldFiles(string folderPath, int maximumAgeInDays)
         {
-
-           //ToDo: Only Delete Elmah Error Files?
-
+            
             DateTime minimumDate = DateTime.Now.AddDays(-maximumAgeInDays);
             foreach (var path in Directory.EnumerateFiles(folderPath))
             {
@@ -88,13 +65,10 @@ namespace Console_Test.AutoClean
 
         }
 
-        private const int RetriesOnError = 3;
-        private const int DelayOnRetry = 1000;
-
        
-
         private static bool DeleteFileIfOlderThan(string path, DateTime date)
         {
+            
             for (int i = 0; i < RetriesOnError; ++i)
             {
                 try
@@ -103,9 +77,6 @@ namespace Console_Test.AutoClean
                    
                     if ( (file.LastWriteTime < date) || (file.CreationTime < date) )
                     {
-                        PrintStars();
-                        Console.WriteLine("Deleting File: " + file.Name);
-                        PrintStars();
                         file.Delete();
                     }
 
@@ -148,9 +119,9 @@ namespace Console_Test.AutoClean
         /// </summary>
         /// <param name="dInfo"></param>
         /// <returns></returns>
-        public static int numFilesinDirectory(DirectoryInfo dInfo)
+        public static int numFilesinDirectory(string LogPath)
         {
-            DirectoryInfo myDir = dInfo;
+            DirectoryInfo myDir = new DirectoryInfo (LogPath);
             int count = myDir.GetFiles().Length;
             return count;
         }
@@ -202,10 +173,59 @@ namespace Console_Test.AutoClean
         {
             Console.WriteLine("**************" + message + "**************");
         }
-       
+
 
 
         #endregion
+
+
+
+        ////Delete this Method?
+        //public String[] GetErrorFiles(string LogPath)
+        //{
+
+        //    /* Get all files in directory */
+        //    string logPath = LogPath;
+        //    DirectoryInfo dir = new DirectoryInfo(logPath);
+
+        //    if (!dir.Exists)
+        //    {
+        //        //Todo: Create Directory Path? or Throw an Error?
+        //    }
+
+        //    /* Gets only Elmah Error Files in XML Store */
+        //    FileSystemInfo[] infos = dir.GetFiles("error-*.xml");
+
+
+        //    if (infos.Length < 1)
+        //    {
+        //        //XML Store does not have any Errors
+        //        Console.WriteLine("XML Store does not have any Errors");
+
+        //        return null;
+
+        //    }
+
+
+        //    string[] files = new string[infos.Length];
+        //    int count = 0;
+
+        //    Console.WriteLine("There are" + infos.Length + "Files");
+
+
+        //    /* Get files that are not marked with system and hidden attributes */
+        //    foreach (FileSystemInfo info in infos)
+        //    {
+        //        if (IsUserFile(info.Attributes))
+
+        //            files[count++] = Path.Combine(logPath, info.Name);
+        //    }
+
+        //    return files;
+
+        //}
+
+
 
 
     }

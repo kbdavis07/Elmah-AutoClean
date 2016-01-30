@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Elmah_AutoClean")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AutoClean")]
+[assembly: AssemblyDescription("Auto Clean for Elmah, it deletes XML Error Logs.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Kbdavis07.Com")]
 [assembly: AssemblyProduct("Elmah_AutoClean")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

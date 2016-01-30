@@ -23,12 +23,8 @@
 
 
 
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Console_Test.AutoClean.Files;
 
 namespace Console_Test.AutoClean
@@ -47,25 +43,20 @@ namespace Console_Test.AutoClean
     /// </remarks>
     class CleanUp
     {
-
-        /// <summary>
-        /// Default Path is /App_Data/errors/xmlstore/
-        /// </summary>
-        /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
-        public static void RunCleanUp(string LogPath)
-        {
-            DeleteToSaveSpace();
-
-        }
-
-
-
         /// <summary>
         /// Path to the XML Store
         /// </summary>
         const string LogPath = (@"P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
-        static DirectoryInfo dInfo = new DirectoryInfo(LogPath);
-        
+       
+        /// <summary>
+        /// Default Path is /App_Data/errors/xmlstore/
+        /// </summary>
+        /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
+        public static void AutoClean(string LogPath = LogPath)
+        {
+            DeleteToSaveSpace(LogPath);
+
+        }
 
         /// <summary>
         /// Used for Testing and Debuging instead of putting it in the Main Program 
@@ -77,7 +68,7 @@ namespace Console_Test.AutoClean
             PrintStars();
             PrintStars("Result");
 
-            int ResultnumFiles = Files.numFilesinDirectory(dInfo);
+            int ResultnumFiles = Files.numFilesinDirectory(LogPath);
             int ResultOldestDate = GetOldestFile(LogPath);
 
             PrintStars(ResultnumFiles.ToString());
@@ -85,34 +76,45 @@ namespace Console_Test.AutoClean
             PrintStars(ResultOldestDate.ToString());
         }
 
-
         /// <summary>
         /// 
         /// </summary>
-        public static int DeleteToSaveSpace(string LogPath = LogPath)
+        /// <param name="LogPath"></param>
+        public static void DeleteToSaveSpace(string LogPath = LogPath)
         {
             DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
             int OldestDate = GetOldestFile(LogPath);
-              int numFiles = Files.numFilesinDirectory(dInfo);
+              int numFiles = Files.numFilesinDirectory(LogPath);
            decimal dirSize = Files.directorySize(dInfo);
 
 
-
+            // Older than 31 days, More than 1,000 files, or has 40MB in folder 
             if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 39 )
             {
                 while ( (numFiles > 999 || OldestDate > 30) || dirSize > 39)
                 {
-                    DeleteByDate(OldestDate);
+                    DeleteByDate(LogPath,OldestDate);
                 }
              
             }
 
+            // Older than 11 through 30 days, have 200 through 999 files
             if (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
             {
                 while (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
                 {
-                    DeleteByDate(OldestDate);
+                    DeleteByDate(LogPath,OldestDate);
+                }
+
+            }
+
+            // Keep files betwen 5 to 10 days under 100 files.
+            if (Enumerable.Range(5, 10).Contains(OldestDate) & numFiles > 100)
+            {
+                while (Enumerable.Range(5, 10).Contains(OldestDate) & numFiles > 100)
+                {
+                    DeleteByDate(LogPath,OldestDate);
                 }
 
             }
@@ -121,22 +123,17 @@ namespace Console_Test.AutoClean
             else
 
             {
-                //HighVolume(dirSize, numFiles);
-                //ToDo: Need to check how many files are remaining.
-
-                return Files.numFilesinDirectory(dInfo);
+               //ToDo: Need to do anything?
             }
 
-            return Files.numFilesinDirectory(dInfo);
-
+            
         }
-
-        
+ 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="days"></param>
-        public static void DeleteByDate(int days)
+        public static void DeleteByDate(string LogPath,int days)
         {
             Files.DeleteOldFiles(LogPath, days);
         }
