@@ -49,6 +49,18 @@ namespace Console_Test.AutoClean
     {
 
         /// <summary>
+        /// Default Path is /App_Data/errors/xmlstore/
+        /// </summary>
+        /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
+        public static void RunCleanUp(string LogPath)
+        {
+            DeleteToSaveSpace();
+
+        }
+
+
+
+        /// <summary>
         /// Path to the XML Store
         /// </summary>
         const string LogPath = (@"P:/Projects/Elmah/Elmah-AutoClean/Elmah-AutoClean/App_Data/errors/xmlstore/");
@@ -74,12 +86,10 @@ namespace Console_Test.AutoClean
         }
 
 
-
-
         /// <summary>
         /// 
         /// </summary>
-        public static int DeleteToSaveSpace()
+        public static int DeleteToSaveSpace(string LogPath = LogPath)
         {
             DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
