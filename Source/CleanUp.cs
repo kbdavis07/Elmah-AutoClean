@@ -45,28 +45,11 @@ namespace AutoClean
     /// </remarks>
     class CleanUp
     {
-        /// <summary>
-        /// Path to the XML Store
-        /// </summary>
-
-        static string _LogPath = HttpContext.Current.Server.MapPath("~/App_Data/errors/xmlstore/");
-
-        public static string LogPath
-        {
-            get
-            {
-                return _LogPath;
-            }
-
-            set
-            {
-                _LogPath = value;
-            }
-        }
-
+      
        
         //ToDo: Need to have LogPath Method to handle if Diretory is not found.
 
+        //ToDo: Create extension method for settings 
 
         /// <summary>
         /// Default Path is /App_Data/errors/xmlstore/
@@ -74,8 +57,9 @@ namespace AutoClean
         /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
         public static void AutoClean()
         {
-           
-            DeleteToSaveSpace(LogPath);
+
+            string _LogPath = HttpContext.Current.Server.MapPath("~/App_Data/errors/xmlstore/");
+            DeleteToSaveSpace(_LogPath);
 
         }
 
@@ -85,7 +69,7 @@ namespace AutoClean
         /// 
         /// </summary>
         /// <param name="LogPath"></param>
-        public static void DeleteToSaveSpace(string LogPath = LogPath)
+        public static void DeleteToSaveSpace(string LogPath)
         {
             DirectoryInfo dInfo = new DirectoryInfo(LogPath);
 
