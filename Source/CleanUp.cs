@@ -43,7 +43,7 @@ namespace AutoClean
     /// Approach made here is to "Clean as you go" so that a massive batch of deleting files is not needed.
     /// This is made through the DeleteDuplicates and DeleteToSaveSpace functions.
     /// </remarks>
-    class CleanUp
+    public class CleanUp
     {
       
        

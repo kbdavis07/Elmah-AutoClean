@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Elmah_AutoClean;
+using AutoClean;
+
 
 namespace Elmah_AutoClean
 {
@@ -17,6 +19,13 @@ namespace Elmah_AutoClean
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Exception ex = new Exception("Application has started");
+
+            ErrorLog.LogError(ex);
+
+            CleanUp.AutoClean();
+
         }
     }
 }
