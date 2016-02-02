@@ -1,4 +1,5 @@
 ﻿using AutoClean;
+using Elmah;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,12 @@ namespace Elmah_AutoClean.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
+
+            //Exception ex = new Exception("Application has started");
+
+            //ErrorLog.LogError(ex);
+
+            //ErrorSignal.FromCurrentContext().Raise(ex);
 
             return View();
         }

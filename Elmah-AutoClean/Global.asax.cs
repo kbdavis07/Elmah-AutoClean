@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Elmah_AutoClean;
 using AutoClean;
-
+using Hangfire;
 
 namespace Elmah_AutoClean
 {
@@ -20,11 +15,15 @@ namespace Elmah_AutoClean
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Exception ex = new Exception("Application has started");
+            // Storage is the only thing required for basic configuration.
+            // Just discover what configuration options do you have.
 
-            ErrorLog.LogError(ex);
-
-            CleanUp.AutoClean();
+            GlobalConfiguration.Configuration.UseSqlServerStorage("DefaultConnection");
+            
+            //.UseActivator(...)
+            //.UseLogProvider(...)
+            
+            RecurringJob.AddOrUpdate(() => CleanUp.AutoClean(), Cron.Daily);
 
         }
     }

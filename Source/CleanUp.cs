@@ -21,13 +21,12 @@
 //
 #endregion
 
-
-
 using System;
 using System.IO;
 using System.Linq;
 using static AutoClean.Files;
 using System.Web;
+using Elmah;
 
 namespace AutoClean
 {
@@ -60,6 +59,9 @@ namespace AutoClean
 
             string _LogPath = HttpContext.Current.Server.MapPath("~/App_Data/errors/xmlstore/");
             DeleteToSaveSpace(_LogPath);
+
+            Exception ex = new Exception("Auto Clean has started");
+            ErrorSignal.FromCurrentContext().Raise(ex);
 
         }
 

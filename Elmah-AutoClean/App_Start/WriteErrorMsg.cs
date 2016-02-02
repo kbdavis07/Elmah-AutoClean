@@ -1,4 +1,5 @@
 ﻿using Elmah;
+using Elmah.Bootstrapper;
 using System;
 using System.Web;
 
@@ -6,6 +7,28 @@ namespace Elmah_AutoClean
 {
     public static class ErrorLog
     {
+
+        public static void Init()
+        { 
+            //App.OnModuleEvent(
+            //    (m, h) => m.Logged += h,
+            //    (m, h) => m.Logged -= h,
+            //    h => new ErrorLoggedEventHandler((sender, args) => h(sender, args)),
+            //    (Elmah.ErrorLogModule sender, ErrorLoggedEventArgs args) =>
+            //    {
+            //        Exception ex = new Exception("This is from ErrorLog");
+                    
+            //        ErrorSignal.FromCurrentContext().Raise(ex);
+            //    });
+        }
+
+
+
+
+
+
+
+
         /// <summary>
         /// Log error to Elmah
         /// </summary>
