@@ -31,41 +31,84 @@ using Elmah;
 namespace AutoClean
 {
     /// <summary>
-    /// This Class Cleans Up the Elmah Error XML files stored in the XML Store Directory /App_Data/errors/xmlstore
-    /// Certain Situations triggers a clean up.
+    /// Cleans Up files stored in a Directory like /App_Data/errors/xmlstore
     /// </summary>
     /// <remarks>
-    /// 1. XML Error File is a Duplicate by Error or User.
-    /// 2. Delete Files by Date the Error File was made.
-    /// 3. The Store Directory is getting full and needs to be clear to free up resources.
-    ///
-    /// Approach made here is to "Clean as you go" so that a massive batch of deleting files is not needed.
-    /// This is made through the DeleteDuplicates and DeleteToSaveSpace functions.
+    /// Approach made here is to "Clean as you go" so that a massive batch of deleting files is not needed for a directory at one time.
+    /// 
     /// </remarks>
     public class CleanUp
     {
-      
-       
-        //ToDo: Need to have LogPath Method to handle if Diretory is not found.
 
-        //ToDo: Create extension method for settings 
+
+        //ToDo: Need to have LogPath Method to handle if Directory is not found.
+
+        //ToDo: Create extension method for settings? 
 
         /// <summary>
-        /// Default Path is /App_Data/errors/xmlstore/
+        /// Starts the AutoClean function with the Default Path of /App_Data/errors/xmlstore/ .
+        /// If directory is not found it is created at: /App_Data/errors/xmlstore/
+        /// If you need to have the directory in a different location just provide the path in the method call.
+        /// AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");
         /// </summary>
         /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
         public static void AutoClean()
         {
 
-            string _LogPath = HttpContext.Current.Server.MapPath("~/App_Data/errors/xmlstore/");
-            DeleteToSaveSpace(_LogPath);
+            System.Threading.Thread.Sleep(5);
 
-            Exception ex = new Exception("Auto Clean has started");
-            ErrorSignal.FromCurrentContext().Raise(ex);
+            try
+            {
+                string _LogPath = HttpContext.Current.Server.MapPath("~/App_Data/errors/xmlstore/");
+
+                if (!Directory.Exists(_LogPath))
+                {
+                    Directory.CreateDirectory(_LogPath);
+                }
+
+                DeleteToSaveSpace(_LogPath);
+                
+            }
+            catch (Exception)
+            {
+                //Todo: Do something if error happens.
+                throw;
+            }
 
         }
 
-       
+        /// <summary>
+        /// Need to provide a path to a directory that needs to be cleaned.
+        /// Like: <c> AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");</c>
+        /// </summary>
+        /// <param name="_LogPath"> <c>"/App_Data/Errors"</c></param>
+        public static void AutoClean(string _LogPath)
+        {
+            System.Threading.Thread.Sleep(5);
+
+            try
+            {
+                if (_LogPath != null)
+                {
+                    string LogPath = HttpContext.Current.Server.MapPath("~" + _LogPath);
+
+                    if (!Directory.Exists(LogPath))
+                    {
+                        Directory.CreateDirectory(LogPath);
+                    }
+
+                    DeleteToSaveSpace(LogPath);
+                }
+
+            }
+            catch (Exception)
+            {
+                //Todo: Do something if error happens.
+                throw;
+            }
+
+        }
+
 
         /// <summary>
         /// 
