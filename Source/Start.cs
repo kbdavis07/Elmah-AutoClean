@@ -24,21 +24,22 @@
 using System.Web;
 using AutoClean;
 
-[assembly: PreApplicationStartMethod(typeof(Start.Ignition), "Start")]
+[assembly: PreApplicationStartMethod(typeof(Ignition), "Start")]
 namespace AutoClean
 {
-    /// <summary>
-    /// Tasks that needs to start on Application Start goes here.
-    /// </summary>
-    class Start
-    {
-
+    
+        /// <summary>
+        /// 
+        /// </summary>
         public static class Ignition
         {
             static readonly object Lock = new object();
 
             static bool _registered;
 
+            /// <summary>
+            /// 
+            /// </summary>
             public static void Start()
             {
                 lock (Lock)
@@ -56,5 +57,5 @@ namespace AutoClean
             }
 
         }
-    }
+    
 }
