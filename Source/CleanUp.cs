@@ -123,10 +123,10 @@ namespace AutoClean
            decimal dirSize = Files.directorySize(dInfo);
 
 
-            // Older than 31 days, More than 1,000 files, or has 40MB in folder 
-            if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 15 )
+            // Older than 31 days, More than 1,000 files, or has 10MB in folder 
+            if ( (OldestDate > 30) || (numFiles > 999) || dirSize > 10 )
             {
-                while ( (numFiles > 999 || OldestDate > 30) || dirSize > 15)
+                while ( (numFiles > 999 || OldestDate > 30) || dirSize > 10)
                 {
                     DeleteByDate(LogPath,OldestDate);
 
@@ -192,8 +192,6 @@ namespace AutoClean
         {
             Files.DeleteOldFiles(LogPath, days);
         }
-
-        
 
     }
 }

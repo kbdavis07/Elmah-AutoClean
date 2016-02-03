@@ -1,0 +1,41 @@
+
+Min Days: 10   
+Max Days: 31
+
+Max Directory Size: 50MB 
+
+Min Files: 100   (10 Days or earlyer) 
+Max Files: 1,000
+
+
+83kb * 1,000 = 83,000kb
+
+
+
+Test cases:
+		
+1. Older than 31 Days
+
+2. More than 1,000 Files
+
+3. Folder more than 16MB
+
+4. Files are 11 to 30 days old
+
+5. Directory contains 200-999 files
+
+6. Files are 5 to 10 days old and have more than 100 Files
+
+
+------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
