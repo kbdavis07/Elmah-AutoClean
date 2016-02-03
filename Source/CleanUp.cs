@@ -26,8 +26,8 @@ using System.IO;
 using System.Linq;
 using static AutoClean.Files;
 using System.Web;
-using Elmah;
 
+[assembly: CLSCompliant(true)]
 namespace AutoClean
 {
     /// <summary>
@@ -37,7 +37,7 @@ namespace AutoClean
     /// Approach made here is to "Clean as you go" so that a massive batch of deleting files is not needed for a directory at one time.
     /// 
     /// </remarks>
-    public class CleanUp
+    public static class CleanUp
     {
 
 
@@ -80,16 +80,16 @@ namespace AutoClean
         /// Need to provide a path to a directory that needs to be cleaned.
         /// Like: <c> AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");</c>
         /// </summary>
-        /// <param name="_LogPath"> <c>"/App_Data/Errors"</c></param>
-        public static void AutoClean(string _LogPath)
+        /// <param name="logPath"> <c>"/App_Data/Errors"</c></param>
+        public static void AutoClean(string logPath)
         {
             System.Threading.Thread.Sleep(5);
 
             try
             {
-                if (_LogPath != null)
+                if (logPath != null)
                 {
-                    string LogPath = HttpContext.Current.Server.MapPath("~" + _LogPath);
+                    string LogPath = HttpContext.Current.Server.MapPath("~" + logPath);
 
                     if (!Directory.Exists(LogPath))
                     {
@@ -112,13 +112,13 @@ namespace AutoClean
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="LogPath"></param>
-        public static void DeleteToSaveSpace(string LogPath)
+        /// <param name="logPath"></param>
+        public static void DeleteToSaveSpace(string logPath)
         {
-            DirectoryInfo dInfo = new DirectoryInfo(LogPath);
+            DirectoryInfo dInfo = new DirectoryInfo(logPath);
 
-            int OldestDate = GetOldestFile(LogPath);
-              int numFiles = Files.numFilesinDirectory(LogPath);
+            int OldestDate = GetOldestFile(logPath);
+              int numFiles = Files.numFilesinDirectory(logPath);
            decimal dirSize = Files.directorySize(dInfo);
 
 
@@ -127,10 +127,10 @@ namespace AutoClean
             {
                 while ( (numFiles > 999 || OldestDate > 30) || dirSize > 10)
                 {
-                    DeleteByDate(LogPath,OldestDate);
+                    DeleteByDate(logPath,OldestDate);
 
-                    numFiles = Files.numFilesinDirectory(LogPath);
-                    OldestDate = GetOldestFile(LogPath);
+                    numFiles = Files.numFilesinDirectory(logPath);
+                    OldestDate = GetOldestFile(logPath);
                     dirSize = Files.directorySize(dInfo);
 
                     //Console.WriteLine(String.Format("Round 1: | NumFiles:  {0,-10} | OldestDate:  {1,5} | DirSize {2,10} |", numFiles, OldestDate, dirSize));
@@ -145,10 +145,10 @@ namespace AutoClean
             {
                 while (Enumerable.Range(11, 30).Contains(OldestDate) || (Enumerable.Range(200, 999).Contains(numFiles)))
                 {
-                    DeleteByDate(LogPath,OldestDate);
+                    DeleteByDate(logPath,OldestDate);
 
-                    numFiles = Files.numFilesinDirectory(LogPath);
-                    OldestDate = GetOldestFile(LogPath);
+                    numFiles = Files.numFilesinDirectory(logPath);
+                    OldestDate = GetOldestFile(logPath);
                     dirSize = Files.directorySize(dInfo);
 
                     System.Threading.Thread.Sleep(5);
@@ -161,10 +161,10 @@ namespace AutoClean
             {
                 while (Enumerable.Range(5, 10).Contains(OldestDate) & numFiles > 100)
                 {
-                    DeleteByDate(LogPath,OldestDate);
+                    DeleteByDate(logPath,OldestDate);
 
-                    numFiles = Files.numFilesinDirectory(LogPath);
-                    OldestDate = GetOldestFile(LogPath);
+                    numFiles = Files.numFilesinDirectory(logPath);
+                    OldestDate = GetOldestFile(logPath);
                     dirSize = Files.directorySize(dInfo);
 
                     System.Threading.Thread.Sleep(5);
@@ -186,10 +186,11 @@ namespace AutoClean
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="logPath"></param>
         /// <param name="days"></param>
-        public static void DeleteByDate(string LogPath,int days)
+        public static void DeleteByDate(string logPath,int days)
         {
-            Files.DeleteOldFiles(LogPath, days);
+            Files.DeleteOldFiles(logPath, days);
         }
 
     }
