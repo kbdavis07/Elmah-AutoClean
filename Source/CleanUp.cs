@@ -51,7 +51,6 @@ namespace AutoClean
         /// If you need to have the directory in a different location just provide the path in the method call.
         /// AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");
         /// </summary>
-        /// <param name="LogPath">Default Path is /App_Data/errors/xmlstore/</param>
         public static void AutoClean()
         {
 

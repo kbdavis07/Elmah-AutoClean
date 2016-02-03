@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Auto Clean")]
-[assembly: AssemblyDescription("Auto Clean for Elmah on XML Log")]
+[assembly: AssemblyDescription("Auto Clean for files in a directory")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kbdavis07.Com")]
 [assembly: AssemblyProduct("")]
