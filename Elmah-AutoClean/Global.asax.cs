@@ -23,7 +23,7 @@ namespace Elmah_AutoClean
             //.UseActivator(...)
             //.UseLogProvider(...)
             
-            RecurringJob.AddOrUpdate(() => CleanUp.AutoClean(), Cron.Daily);
+            //RecurringJob.AddOrUpdate(() => CleanUp.AutoClean(), Cron.Daily);
 
         }
     }

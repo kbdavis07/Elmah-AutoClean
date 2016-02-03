@@ -44,28 +44,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoClean, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Source\bin\Debug\AutoClean.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.Elmah.v2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Elmah.v2.1.0.1\lib\net45\Common.Logging.Elmah.v2.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Elmah.Bootstrapper, Version=1.0.18913.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\elmah.bootstrapper.1.0.0-beta6\lib\net45\Elmah.Bootstrapper.dll</HintPath>
+    <Reference Include="AutoClean, Version=1.0.0.0, Culture=neutral, PublicKeyToken=98821ca594bff80d, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoClean.1.0.0-beta\lib\AutoClean.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Hangfire.Core, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -243,13 +223,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoClean.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\JSNLogConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WriteErrorMsg.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -263,6 +243,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-Elmah-AutoClean-20160124080635.mdf" />
+    <Content Include="App_Data\aspnet-Elmah-AutoClean-20160124080635_log.ldf">
+      <DependentUpon>aspnet-Elmah-AutoClean-20160124080635.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="errors\elvue.html" />
@@ -279,7 +263,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Elmah.Athz.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

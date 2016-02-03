@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutoClean</name>
+    </assembly>
+    <members>
+        <member name="T:AutoClean.CleanUp">
+            <summary>
+            Cleans Up files stored in a Directory like /App_Data/errors/xmlstore
+            </summary>
+            <remarks>
+            Approach made here is to "Clean as you go" so that a massive batch of deleting files is not needed for a directory at one time.
+            
+            </remarks>
+        </member>
+        <member name="M:AutoClean.CleanUp.AutoClean">
+            <summary>
+            Starts the AutoClean function with the Default Path of /App_Data/errors/xmlstore/ .
+            If directory is not found it is created at: /App_Data/errors/xmlstore/
+            If you need to have the directory in a different location just provide the path in the method call.
+            AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");
+            </summary>
+        </member>
+        <member name="M:AutoClean.CleanUp.AutoClean(System.String)">
+            <summary>
+            Need to provide a path to a directory that needs to be cleaned.
+            Like: <c> AutoClean("/Path/To/YourDirectory/ThatNeedsTobeCleaned/");</c>
+            </summary>
+            <param name="logPath"> <c>"/App_Data/Errors"</c></param>
+        </member>
+        <member name="M:AutoClean.CleanUp.DeleteToSaveSpace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="logPath"></param>
+        </member>
+        <member name="M:AutoClean.CleanUp.DeleteByDate(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="logPath"></param>
+            <param name="days"></param>
+        </member>
+        <member name="T:AutoClean.Files">
+            <summary>
+            Tools for operating with XML files for AutoClean Operations.
+            </summary>
+        </member>
+        <member name="M:AutoClean.Files.DeleteOldFiles(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="folderPath"></param>
+            <param name="maximumAgeInDays"></param>
+            <remarks>cref ="http://stackoverflow.com/questions/10295561/delete-files-older-than-a-date" </remarks>
+            <call> Helpers.DeleteOldFiles(@"c:\mypath\", logAge); </call>
+        </member>
+        <member name="M:AutoClean.Files.directorySize(System.IO.DirectoryInfo)">
+            <summary>
+            Gets the Total Size in MB of a Directory.
+            </summary>
+            <param name="logPath"></param>
+            <returns>Total Size of Directory as a Decimal in MegaBytes (MB)</returns>
+        </member>
+        <member name="M:AutoClean.Files.numFilesinDirectory(System.String)">
+            <summary>
+            Returns the Number of Files in a Directory
+            </summary>
+            <param name="logPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AutoClean.Files.GetOldestFile(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="directory"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AutoClean.Ignition">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AutoClean.Ignition.Start">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

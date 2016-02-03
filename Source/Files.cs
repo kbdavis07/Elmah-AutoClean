@@ -1,6 +1,6 @@
 ﻿#region License, Terms and Author(s)
 //
-// ELMAH - Error Logging Modules and Handlers Auto Clean for ASP.NET
+// Auto Clean for ASP.NET
 // Copyright (c) 2016 Brian Keith Davis. All rights reserved.
 //
 //  Author(s):

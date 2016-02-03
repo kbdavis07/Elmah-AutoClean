@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+    <metadata>
+        <id>AutoClean</id>
+        <version>1.0.0-beta</version>
+        <title>AutoClean</title>
+        <authors>kbdavis07</authors>
+        <owners>kbdavis07</owners>
+        <projectUrl>http://kbdavis07.com/Projects/AutoClean/</projectUrl>
+        <iconUrl>https://secure.gravatar.com/avatar/fb1016f89aaf56e0137d00ccc040c75e?s=64</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <developmentDependency>true</developmentDependency>
+        <description>Automatically deletes older files in a directory.  This is useful for Elmah and other xml based loggers and etc. Go to http://kbdavis07.com/Projects/AutoClean/ for more information.</description>
+        <summary>Automatically deletes older files in a directory.  This is useful for Elmah and other xml based loggers and etc. Go to http://kbdavis07.com/Projects/AutoClean/ for more information.</summary>
+        <copyright>2016</copyright>
+        <language>en-001</language>
+        <tags>Elmah</tags>
+        <dependencies>
+            <dependency id="WebActivatorEx" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\Source\AutoClean.cs.pp" target="content\App_Start\AutoClean.cs.pp" />
+        <file src="..\Source\bin\Debug\AutoClean.dll" target="lib\AutoClean.dll" />
+    </files>
+</package>
